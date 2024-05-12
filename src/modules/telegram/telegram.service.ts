@@ -38,12 +38,12 @@ export class TelegramService {
     };
 
     const message = `\nThời tiết: ${dataFormat.name}
-    \nNgày ${dayjs(new Date()).get('days')} tháng ${dayjs(new Date()).get('months')} năm ${dayjs(new Date()).get('years')}
+    \nNgày ${dayjs(new Date()).daysInMonth()} tháng ${dayjs(new Date()).month() + 1} năm ${dayjs(new Date()).get('years')}
     \nNhiệt độ: ${dataFormat.main.temp}°C
     \nThời tiết: ${dataFormat.weather[0].description}
     \nNhiệt độ ngoài trời: ${dataFormat.main.feels_like}°C
     \nĐộ ẩm: ${dataFormat.main.humidity}%
-    \nTốc độ gió: ${dataFormat.wind.speed}km/h`;
+    \nTốc độ gió: ${dataFormat.wind.speed} km/h`;
 
     await this.sendMessageToChannel(message);
   }
