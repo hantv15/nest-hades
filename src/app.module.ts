@@ -7,8 +7,13 @@ import { WeatherModule } from './modules/weather/weather.module';
 import { TelegramModule } from './modules/telegram/telegram.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ envFilePath: '.env' }), CommonModule, WeatherModule, TelegramModule],
+  imports: [
+    ConfigModule.forRoot({ envFilePath: '.env' }),
+    CommonModule,
+    WeatherModule,
+    TelegramModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -14,22 +14,22 @@ import { AllExceptionFilter } from './common/filters/all-exception.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix(process.env.PREFIX_APPLICATION)
+  app.setGlobalPrefix(process.env.PREFIX_APPLICATION);
 
   app.enableCors();
   app.use(helmet());
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    transform: true,
-    exceptionFactory: (errors: ValidationError[]) => {
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      exceptionFactory: (errors: ValidationError[]) => {
         return errors[0];
-    },
-  }));
-
-  app.useGlobalFilters(
-    new AllExceptionFilter(),
+      },
+    }),
   );
+
+  app.useGlobalFilters(new AllExceptionFilter());
 
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ limit: '50mb', extended: true }));
@@ -38,6 +38,6 @@ async function bootstrap() {
   await app.listen(PORT);
 
   // Generate port
-  Logger.log(`Listening: ${process.env.PORT}`)
+  Logger.log(`Listening: ${process.env.PORT}`);
 }
 bootstrap();
