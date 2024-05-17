@@ -30,7 +30,7 @@ export class TelegramService {
     weather: { id: number; main: string; description: string; icon: string }[];
   }) {
     return `\nThời tiết: ${dataFormat.name}
-    \nNgày ${dayjs(new Date()).daysInMonth()} tháng ${dayjs(new Date()).month() + 1} năm ${dayjs(new Date()).get('years')}
+    \nNgày ${dayjs(new Date()).day()} tháng ${dayjs(new Date()).month() + 1} năm ${dayjs(new Date()).get('years')}
     \nNhiệt độ: ${dataFormat.main.temp}°C
     \nThời tiết: ${dataFormat.weather[0].description}
     \nNhiệt độ ngoài trời: ${dataFormat.main.feels_like}°C
