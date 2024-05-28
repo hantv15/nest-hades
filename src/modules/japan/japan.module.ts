@@ -6,4 +6,4 @@ import { JapanService } from './japan.service';
   controllers: [JaapnController],
   providers: [JapanService]
 })
-export class JaapnModule {}
+export class JapanModule {}
