@@ -1,39 +1,26 @@
 import {
-  ArgumentsHost,
   ExceptionFilter,
+  Catch,
+  ArgumentsHost,
   HttpException,
-  HttpStatus,
-  Logger,
 } from '@nestjs/common';
-import { ERROR } from '../constants/error';
+import { Request, Response } from 'express';
 
+@Catch(HttpException)
 export class AllExceptionFilter implements ExceptionFilter {
-  catch(exception: Error | HttpException | any, host: ArgumentsHost) {
+  catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const request = ctx.getRequest();
-    const response = ctx.getResponse();
-    const now = Date.now();
-    const httpStatus =
-      exception instanceof HttpException ? exception.getStatus() : null;
+    const response = ctx.getResponse<Response>();
+    const request = ctx.getRequest<Request>();
+    const status = exception.getStatus();
+    const messageException: any = exception.getResponse();
 
-    Logger.error(
-      `Api ${request.method} ${request.url} - ${Date.now() - now}ms`,
-    );
-
-    if (httpStatus === 401) {
-      return response.status(HttpStatus.UNAUTHORIZED).send({
-        status: 'error',
-        code: HttpStatus.NON_AUTHORITATIVE_INFORMATION,
-        message: ERROR.NON_AUTHORITATIVE_INFORMATION,
-      });
-    }
-
-    if (httpStatus === 403) {
-      return response.status(HttpStatus.FORBIDDEN).send({
-        status: 'error',
-        code: HttpStatus.FORBIDDEN,
-        message: ERROR.FORBIDDEN,
-      });
-    }
+    response.status(status).json({
+      status_code: status,
+      error: messageException.error,
+      message: messageException.message,
+      timestamp: new Date().toISOString(),
+      path: request.url,
+    });
   }
 }

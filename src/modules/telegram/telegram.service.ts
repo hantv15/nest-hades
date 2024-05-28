@@ -1,5 +1,5 @@
 // Nest dependencies
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 
 // Other dependencies
@@ -29,8 +29,8 @@ export class TelegramService {
     };
     weather: { id: number; main: string; description: string; icon: string }[];
   }) {
-    return `\nThời tiết: ${dataFormat.name}
-    \nNgày ${dayjs(new Date()).day()} tháng ${dayjs(new Date()).month() + 1} năm ${dayjs(new Date()).get('years')}
+    return `\n${dataFormat.name}
+    \nNgày ${dayjs(new Date()).format("DD")} tháng ${dayjs(new Date()).format("MM")} năm ${dayjs(new Date()).format("YYYY")}
     \nNhiệt độ: ${dataFormat.main.temp}°C
     \nThời tiết: ${dataFormat.weather[0].description}
     \nNhiệt độ ngoài trời: ${dataFormat.main.feels_like}°C
@@ -95,7 +95,7 @@ export class TelegramService {
     this.sendNotificationWeather();
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_6AM)
+  @Cron(CronExpression.EVERY_DAY_AT_7AM)
   async handleCronEveryDayAt6Am() {
     this.sendNotificationWeather();
   }
