@@ -1,19 +1,31 @@
+// Nest Dependencies
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { UserService } from './user.service';
+
+// Local dependencies
 import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateRefrallCodeDto } from './dtos/update-referall-code.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Patch(':id/referral-code')
+  updateRefrallCode(
+    @Param('id') id: string,
+    @Body() updateRefrallCodeDto: UpdateRefrallCodeDto,
+  ) {
+    return this.userService.updateReferralCode(id, updateRefrallCodeDto);
+  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {

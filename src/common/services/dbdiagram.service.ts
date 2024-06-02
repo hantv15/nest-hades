@@ -40,14 +40,12 @@ export class DBdiagram {
     let relations = '';
 
     for (let schemaName of schemas) {
-      console.log(schemaName);
-
       dbml += this.mongooseToDbml(schemaName.name, schemaName.schema);
 
       for (let path in schemaName.schema.paths) {
         let field = schemaName.schema.paths[path];
         if (field.options.ref) {
-          relations += `Ref: ${schemaName.schema.obj.parents.ref}.${path} > ${field.options.ref}._id\n`;
+          relations += `Ref: ${schemaName.nam}.${path} > ${field.options.ref}._id\n`;
         }
       }
     }
