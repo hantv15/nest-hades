@@ -58,6 +58,12 @@ export class User {
     required: false,
   })
   referred_by: string;
+
+  @Prop({
+    type: [{ type: mongoose.Types.ObjectId }],
+    ref: 'User',
+  })
+  parent_tree: mongoose.Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
