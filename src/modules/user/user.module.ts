@@ -1,13 +1,15 @@
+// Nest dependencies
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
+
+// Local dependencies
+import { MongodbModule } from 'src/mongodb/mongodb.module';
 import { UserController } from './user.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { schemas } from 'src/mongodb/schemas';
+import { UserService } from './user.service';
 
 @Module({
-  imports: [MongooseModule.forFeature(schemas)],
+  imports: [MongodbModule],
   controllers: [UserController],
   providers: [UserService],
-  exports: [UserService, MongooseModule.forFeature(schemas)],
+  exports: [UserService],
 })
 export class UserModule {}

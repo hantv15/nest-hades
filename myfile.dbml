@@ -1,0 +1,31 @@
+Table Cat {
+  name string []
+  age number []
+  breed string []
+  affiliate string []
+  _id string []
+  created_at string []
+  updated_at string []
+}
+Table User {
+  first_name string [not null]
+  last_name string [not null]
+  email string [not null]
+  password string [not null]
+  phone_number string []
+  referral_code string [not null,unique]
+  referred_by string []
+  _id string []
+  created_at string []
+  updated_at string []
+}
+Table Category {
+  name string [unique]
+  description string []
+  parents string []
+  _id string []
+  created_at string []
+  updated_at string []
+}
+
+Ref: Category.parents > Category._id

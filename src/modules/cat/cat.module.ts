@@ -1,12 +1,14 @@
+// Nest dependencies
 import { Module } from '@nestjs/common';
+
+// Local dependencies
+import { MongodbModule } from 'src/mongodb/mongodb.module';
 import { CatController } from './cat.controller';
 import { CatService } from './cat.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { schemas } from 'src/mongodb/schemas';
 
 @Module({
-  imports: [MongooseModule.forFeature(schemas)],
+  imports: [MongodbModule],
   controllers: [CatController],
-  providers: [CatService]
+  providers: [CatService],
 })
 export class CatModule {}

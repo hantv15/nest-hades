@@ -1,17 +1,21 @@
+// Golobal config
 import 'dotenv/config';
 
 // Nest dependencies
-import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 
 // Other dependencies
-import helmet from 'helmet';
 import { json, urlencoded } from 'body-parser';
 import { ValidationError } from 'class-validator';
+import * as fs from 'fs';
+import helmet from 'helmet';
 
 // Local dependencies
 import { AppModule } from './app.module';
 import { AllExceptionFilter } from './common/filters/all-exception.filter';
+import { dbdiagram } from './common/services/dbdiagram.service';
+import { schemas } from './mongodb/schemas';
 
 declare const module: any;
 
@@ -45,6 +49,12 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
+
+  const dbml = dbdiagram.generateDbml(schemas);
+  fs.writeFile('myfile.dbml', dbml, function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  });
 
   // Generate port
   Logger.log(`Listening: ${process.env.PORT}`);
